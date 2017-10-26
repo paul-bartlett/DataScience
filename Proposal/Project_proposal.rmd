@@ -1,0 +1,17 @@
+---
+title: "CS4414a Project Proposal"
+author: "Paul Bartlett"
+date: "October 26, 2017"
+output:
+  pdf_document: 
+    number_sections: false
+    keep_tex: true
+    latex_engine: xelatex
+    includes:
+      in-header: ./cs4437cs9637.sty
+---
+# Description of Applied Problem
+
+# Description of Available Data
+
+# Plan for Analysis and Visualization
