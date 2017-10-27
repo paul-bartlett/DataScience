@@ -11,7 +11,11 @@ output:
       in-header: ./cs4437cs9637.sty
 ---
 # Description of Applied Problem
-The trends of popular music can easily be gotten through Billboard charts that have existed for over 50 years. The problem with getting data from these charts is that popular music generally isn't critically acclaimed, and the charts don't tell us about the musical trends of the highest rated artists and albums.
+The trends of popular music can easily be attained through the various Billboard charts that have existed for over 50 years. 
+The problem with getting data from these charts is that popular music generally isn't critically acclaimed, and is therefore 
+not as interesting as data from sources that evaluate music more objectively. Using a dataset that includes over 18,000 reviews 
+from Pitchfork, I will be going through the data to find how critically acclaimed music has changed over time.
+and the charts don't tell us about the musical trends of the highest rated artists and albums.
 http://www.latimes.com/visuals/graphics/la-sci-g-music-evolution-20150505-htmlstory.html
 https://musicmap.info/
 
