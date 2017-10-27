@@ -7,8 +7,6 @@ output:
     latex_engine: xelatex
     template: ./cs4414.tex
 title: "Evaluating Patterns in Critically Acclaimed Music"
-subtitle: ""
-subsubtitle: ""
 runhead: "Project Proposal"
 authorname: Paul Bartlett
 studentnumber: 250753008
@@ -17,8 +15,6 @@ email: pbartle7@uwo.ca
 teacher: Dan Lizotte
 classname: CS4414
 date: "`r format(Sys.time(), '%B %d, %Y')`"
-geometry: margin=1in
-fontsize: 11pt
 indent: yes
 bibliography: bibliography.bib
 colorlinks: true
