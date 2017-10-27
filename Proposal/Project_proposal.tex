@@ -61,6 +61,9 @@ successful genre of critically acclaimed music is for each of the last
 \section{Description of Applied
 Problem}\label{description-of-applied-problem}
 
+\subsection{Existing solutions to similar
+problems}\label{existing-solutions-to-similar-problems}
+
 The trends of popular music can easily be attained through the various
 Billboard charts that have existed since 1955. A group of scientists
 from the University of London analysed around 17,000 songs that charted
@@ -75,9 +78,12 @@ about hundreds of genres of music and their history. It provides a great
 overview of all the popular strands of music, but doesn't go into too
 much depth about specific artists or albums. It does provide a good
 overview of all genres regardless of popularity, but I'm more interested
-in evaluating the history of the best albums created by artists. Using a
-dataset that includes over 18,000 reviews from Pitchfork, I will be
-going through the data to find how critically acclaimed music has
+in evaluating the history of the best albums created by artists.
+
+\subsection{Pitchfork solution}\label{pitchfork-solution}
+
+Using a dataset that includes over 18,000 reviews from Pitchfork, I will
+be going through the data to find how critically acclaimed music has
 changed over time. In addition, I will also be looking at which release
 from an artist is the most well received. A general pattern I've seen
 when listening to several albums from an artist is that the first 2-3
@@ -87,6 +93,8 @@ the data to confirm or deny this assumption.
 \section{Description of Available
 Data}\label{description-of-available-data}
 
+\subsection{Pitchfork}\label{pitchfork}
+
 The dataset that I will be using is taken from Pitchfork. Pitchfork is
 an online magazine that focuses on reviewing both popular and
 independant music. The data set for Pitchfork Reviews from January 5th,
@@ -94,14 +102,49 @@ independant music. The data set for Pitchfork Reviews from January 5th,
 are 18,393 reviews that include important data including release year,
 artist name, genre, and a score ranging from 0.0-10.0. Considering that
 Pitchfork is one of the longest running online review sites, it makes it
-a primary choice for useful data. The site features a section called
-``Best New Music'' for highlighting recent releases that the staff found
-to stand out in a positive way. These albums generally have a minimum
-score of 8.0 and are another useful way for tracking the best music on
-the site. The dataset includes an identifier for ``Best New Music'', and
-would be a useful way to sort through the data. Unfortunately, this
-feature launched in 2003 so using it would leave out all the music
-before it was launched.
+a primary choice for useful data.
+
+\subsection{Best New Music}\label{best-new-music}
+
+Pitchfork features a section called ``Best New Music'' for highlighting
+recent releases that the staff found to stand out in a positive way.
+These albums generally have a minimum score of 8.0 and are another
+useful way for tracking the best music on the site. The dataset includes
+an identifier for ``Best New Music'', and would be a useful way to sort
+through the data.
+
+\section{Plan for Analysis and
+Visualization}\label{plan-for-analysis-and-visualization}
+
+\subsection{Analysis}\label{analysis}
+
+To analyse this data properly, we must use a method to take out only the
+best reviews from the dataset. Fortunately, Pitchfork has a system to
+distinguish the best albums called ``Best New Music''. Unfortunately,
+this feature launched in 2003 so using it would leave out all the music
+before it was launched. By looking at the data, we will be able to find
+the typical rating for an album that gets the ``Best New Music'' tag and
+use that rating to take all albums from the data set that are higher
+than the threshold. From this, we should be able to classify each album
+that meets the requirement by year and genre so that it can be used for
+visualization. To analyse what release number is considered to be the
+best, we will have to query all artists that have multiple releases on
+the site. A similar analysis and visualization was done on kaggle by the
+author of the data \citep{kaggleFirst}.
+
+\subsection{Visualization}\label{visualization}
+
+For visualization, I would like to do something similar to what was done
+for visualizing the U.S. Billboard Hot 100 over the last 50 years
+\citep{BillboardFigure}. The chart features spindles for each genre that
+run vertically with the width proportional to the frequency of the
+style. The y-axis contains the year so the viewer can easily compare
+between each year to see what genre is the most popular or the least
+popular. Since I do not have much experience with visualization, it is
+possible that doing something similar will be too difficult to achieve.
+A simple way to visualize this in a similar way would be to use a line
+graph, with each line representing a genre, the x-axis covering each
+year, and the y-axis covering the frequency.
 
 \bibliography{bibliography.bib}
 \bibliographystyle{plainnat}
