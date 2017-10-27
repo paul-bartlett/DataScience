@@ -11,7 +11,11 @@ output:
       in-header: ./cs4437cs9637.sty
 ---
 # Description of Applied Problem
+The trends of popular music can easily be gotten through Billboard charts that have existed for over 50 years. The problem with getting data from these charts is that popular music generally isn't critically acclaimed, and the charts don't tell us about the musical trends of the highest rated artists and albums.
+http://www.latimes.com/visuals/graphics/la-sci-g-music-evolution-20150505-htmlstory.html
+https://musicmap.info/
 
 # Description of Available Data
+The data set is available on kaggle for [Pitchfork Reviews from January 5th, 1999 to January 8th, 2017](https://www.kaggle.com/nolanbconaway/pitchfork-data).
 
 # Plan for Analysis and Visualization
