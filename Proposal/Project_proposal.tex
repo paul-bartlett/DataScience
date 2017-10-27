@@ -118,6 +118,8 @@ Visualization}\label{plan-for-analysis-and-visualization}
 
 \subsection{Analysis}\label{analysis}
 
+\subsubsection{Genre}\label{genre}
+
 To analyse this data properly, we must use a method to take out only the
 best reviews from the dataset. Fortunately, Pitchfork has a system to
 distinguish the best albums called ``Best New Music''. Unfortunately,
@@ -127,12 +129,21 @@ the typical rating for an album that gets the ``Best New Music'' tag and
 use that rating to take all albums from the data set that are higher
 than the threshold. From this, we should be able to classify each album
 that meets the requirement by year and genre so that it can be used for
-visualization. To analyse what release number is considered to be the
-best, we will have to query all artists that have multiple releases on
-the site. A similar analysis and visualization was done on kaggle by the
-author of the data \citep{kaggleFirst}.
+visualization.
+
+\subsubsection{Release number}\label{release-number}
+
+To analyse what release number is considered to be the best, we will
+have to query all artists that have multiple releases on the site. A
+similar analysis and visualization was done on kaggle by the author of
+the data \citep{kaggleFirst}. The author only covered the first and last
+album, but did complete an analysis on the number of reviews for each
+artist. After this, we need to get the review scores of each album from
+each of the artists with multiple releases.
 
 \subsection{Visualization}\label{visualization}
+
+\subsubsection{Genre}\label{genre-1}
 
 For visualization, I would like to do something similar to what was done
 for visualizing the U.S. Billboard Hot 100 over the last 50 years
@@ -145,6 +156,14 @@ possible that doing something similar will be too difficult to achieve.
 A simple way to visualize this in a similar way would be to use a line
 graph, with each line representing a genre, the x-axis covering each
 year, and the y-axis covering the frequency.
+
+\subsubsection{Release number}\label{release-number-1}
+
+A Box plot would be perfectly suited for this data. Being able to
+visualize the entire range of score for the releases while also seeing
+the median and upper and lower quartiles is highly beneficial. There
+would be a separate box plot for each release number up to the maximum
+reviewed releases by an artist.
 
 \bibliography{bibliography.bib}
 \bibliographystyle{plainnat}
