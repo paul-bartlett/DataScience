@@ -1,100 +1,76 @@
-\documentclass[]{article}
-\usepackage{lmodern}
-\usepackage{amssymb,amsmath}
-\usepackage{ifxetex,ifluatex}
-\usepackage{fixltx2e} % provides \textsubscript
-\ifnum 0\ifxetex 1\fi\ifluatex 1\fi=0 % if pdftex
-  \usepackage[T1]{fontenc}
-  \usepackage[utf8]{inputenc}
-\else % if luatex or xelatex
-  \ifxetex
-    \usepackage{mathspec}
-  \else
-    \usepackage{fontspec}
-  \fi
-  \defaultfontfeatures{Ligatures=TeX,Scale=MatchLowercase}
-\fi
-% use upquote if available, for straight quotes in verbatim environments
-\IfFileExists{upquote.sty}{\usepackage{upquote}}{}
-% use microtype if available
-\IfFileExists{microtype.sty}{%
-\usepackage{microtype}
-\UseMicrotypeSet[protrusion]{basicmath} % disable protrusion for tt fonts
-}{}
-\usepackage[margin=1in]{geometry}
+% Document class
+\documentclass{article}
+
+% For figures
+\usepackage{graphicx} % more modern
+\usepackage{subfigure} 
+% For citations
+\usepackage{natbib}
+
+% For algorithms
+\usepackage{algorithm}
+%\usepackage{algorithmic}
+
+% As of 2011, we use the hyperref package to produce hyperlinks in the
+% resulting PDF.  If this breaks your system, please commend out the
+% following usepackage line and replace \usepackage{cs4437cs9637} with
+% \usepackage[nohyperref]{cs4437cs9637} above.
 \usepackage{hyperref}
-\hypersetup{unicode=true,
-            pdftitle={CS4414a Project Proposal},
-            pdfauthor={Paul Bartlett},
-            pdfborder={0 0 0},
-            breaklinks=true}
-\urlstyle{same}  % don't use monospace font for urls
-\usepackage{graphicx,grffile}
-\makeatletter
-\def\maxwidth{\ifdim\Gin@nat@width>\linewidth\linewidth\else\Gin@nat@width\fi}
-\def\maxheight{\ifdim\Gin@nat@height>\textheight\textheight\else\Gin@nat@height\fi}
-\makeatother
-% Scale images if necessary, so that they will not overflow the page
-% margins by default, and it is still possible to overwrite the defaults
-% using explicit options in \includegraphics[width, height, ...]{}
-\setkeys{Gin}{width=\maxwidth,height=\maxheight,keepaspectratio}
-\IfFileExists{parskip.sty}{%
-\usepackage{parskip}
-}{% else
-\setlength{\parindent}{0pt}
-\setlength{\parskip}{6pt plus 2pt minus 1pt}
-}
-\setlength{\emergencystretch}{3em}  % prevent overfull lines
-\providecommand{\tightlist}{%
-  \setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
-\setcounter{secnumdepth}{0}
-% Redefines (sub)paragraphs to behave more like sections
-\ifx\paragraph\undefined\else
-\let\oldparagraph\paragraph
-\renewcommand{\paragraph}[1]{\oldparagraph{#1}\mbox{}}
-\fi
-\ifx\subparagraph\undefined\else
-\let\oldsubparagraph\subparagraph
-\renewcommand{\subparagraph}[1]{\oldsubparagraph{#1}\mbox{}}
-\fi
 
-%%% Use protect on footnotes to avoid problems with footnotes in titles
-\let\rmarkdownfootnote\footnote%
-\def\footnote{\protect\rmarkdownfootnote}
+% Packages hyperref and algorithmic misbehave sometimes.  We can fix
+% this with the following command.
+\newcommand{\theHalgorithm}{\arabic{algorithm}}
 
-%%% Change title format to be more compact
-\usepackage{titling}
-
-% Create subtitle command for use in maketitle
-\newcommand{\subtitle}[1]{
-  \posttitle{
-    \begin{center}\large#1\end{center}
-    }
-}
-
-\setlength{\droptitle}{-2em}
-  \title{CS4414a Project Proposal}
-  \pretitle{\vspace{\droptitle}\centering\huge}
-  \posttitle{\par}
-  \author{Paul Bartlett}
-  \preauthor{\centering\large\emph}
-  \postauthor{\par}
-  \predate{\centering\large\emph}
-  \postdate{\par}
-  \date{October 26, 2017}
-
+% Employ the following version of the ``usepackage'' statement for
+% submitting the draft version of the paper for review.  This will set
+% the note in the first column to ``Under review.  Do not distribute.''
+\usepackage{cs4437cs9637} 
 
 \begin{document}
-\maketitle
+
+% The \cstitle you define below is probably too long as a header.
+% Therefore, a short form for the running title is supplied here:
+\cstitlerunning{Project Proposal}
+
+\twocolumn[
+\cstitle{Evaluating Patterns in Critically Acclaimed Music}
+
+% It is OKAY to include author information
+\csauthor{Paul Bartlett (\normalsize\emph{\# 250753008})}{\href{mailto:pbartle7@uwo.ca}{\nolinkurl{pbartle7@uwo.ca}}}
+\csaddress{The University Of Western Ontario}
+
+% You may provide any keywords that you 
+% find helpful for describing your paper; these are used to populate 
+% the "keywords" metadata in the PDF but will not be shown in the document
+\cskeywords{}
+
+\vskip 0.3in
+]
+
 
 \section{Description of Applied
 Problem}\label{description-of-applied-problem}
 
+The trends of popular music can easily be attained through the various
+Billboard charts that have existed for over 50 years. The problem with
+getting data from these charts is that popular music generally isn't
+critically acclaimed, and is therefore not as interesting as data from
+sources that evaluate music more objectively. Using a dataset that
+includes over 18,000 reviews from Pitchfork, I will be going through the
+data to find how critically acclaimed music has changed over time. and
+the charts don't tell us about the musical trends of the highest rated
+artists and albums.
+\url{http://www.latimes.com/visuals/graphics/la-sci-g-music-evolution-20150505-htmlstory.html}
+\url{https://musicmap.info/}
+
 \section{Description of Available
 Data}\label{description-of-available-data}
 
-\section{Plan for Analysis and
-Visualization}\label{plan-for-analysis-and-visualization}
+The data set is available on kaggle for
+\href{https://www.kaggle.com/nolanbconaway/pitchfork-data}{Pitchfork
+Reviews from January 5th, 1999 to January 8th, 2017}.
 
+\bibliography{Evaluating Patterns in Critically Acclaimed Music}
+\bibliographystyle{plainnat}
 
-\end{document}
+\end{document} 
