@@ -1,0 +1,174 @@
+---
+title: "Evaluating Patterns in Critically Acclaimed Music"
+author: "Paul Bartlett"
+date: '`r Sys.Date()`'
+output:
+  ioslides_presentation:
+    widescreen: true
+    df_print: paged
+    css: "./ioslides.css"
+---
+
+---
+# Prof wants these things:
+# Explain Problem
+# Explain dataset with example of single entry
+# Explain potential datascience methods
+# Ability to answer questions about data
+# Keep it under 10 mins
+# 5% of mark
+---
+
+```{r echo=FALSE, message=FALSE}
+library(RColorBrewer)
+library(forcats)
+library(ggplot2) # Data visualization
+library(readr) # CSV file I/O, e.g. the read_csv function
+library("RSQLite") # SQLite
+library(Rcpp)
+library(Amelia) 
+library(plyr)
+library(data.table)
+library(SnowballC)
+library(wordcloud)
+library(tm)
+
+# Input data files are available in the "../input/" directory.
+# For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
+
+system("ls ../input")
+
+# Any results you write to the current directory are saved as output.
+```
+
+## Background Info
+
+### Music datasets on kaggle
+
+- Spotify's Worldwide Daily Song Ranking
+- Billboard 1964-2015 Songs + Lyrics
+- 18,393 Pitchfork Reviews
+
+## 
+
+![](https://upload.wikimedia.org/wikipedia/en/thumb/7/76/Pitchfork_logo.svg/370px-Pitchfork_logo.svg.png)
+
+- The most popular independent-focused music publication online
+- Launched in 1995
+- More than 240,000 readers per day
+- Rate albums with a score from 0-10 to one decimal
+- Dataset features reviews from 1999-2017
+
+## Problem and significance
+- Difficult for independent artists to succeed
+- Pitchfork can have a significant impact on an album's popularity
+- Artists could adapt styles that are rated higher
+
+## Project Goals
+
+- Identify which types of genre's rate highest on Pitchfork
+- Identify what features are related to an album's rating and perhaps be able to predict an album's score
+ 
+# Exploring the Dataset 
+
+## Questions Data {.smaller}
+
+```{r}
+sqlite    <- dbDriver("SQLite")
+exampledb <- dbConnect(sqlite,"../input/database.sqlite")
+
+#Take the variables we are interested in
+full_table <- dbGetQuery(exampledb,"SELECT reviews.reviewid, reviews.score, reviews.best_new_music, 
+reviews.author, reviews.pub_year, genres.genre FROM reviews JOIN genres 
+ON reviews.reviewid = genres.reviewid")
+
+dbDisconnect(exampledb)
+
+#Review statistics
+str(full_table)
+```
+
+## Questions Data {.smaller}
+```{r}
+summary(full_table)
+```
+
+## Solution Data {.smaller}
+
+```{r}
+head(full_table)
+
+# A look at whats missing
+missmap(full_table)
+```
+
+## Solution Data {.smaller}
+
+```{r}
+#Code missing to none
+full_table$genre[is.na(full_table$genre)] <- "none"
+
+#Lets see how many genres we are working with
+unique(full_table$genre)
+
+#Lets look at how many reviews there are a year
+table(full_table$pub_year)
+```
+
+## Solution Data {.smaller}
+
+```{r echo=FALSE, message=FALSE}
+#Lets see how this changes by year, by creating a frequency table by year and genre
+count_table <-table(full_table$genre, full_table$pub_year)
+
+count_table<-as.data.frame(count_table)
+count_table<-rename(count_table, c("Var1"="genre", "Var2"="year"))
+
+head(count_table)
+```
+```{r}
+count_table$year <- as.numeric(as.character(count_table$year))
+ggplot(count_table, aes(x=count_table$year, y=count_table$Freq, fill=count_table$genre)) + geom_area()
+```
+
+## Code Data {.smaller}
+
+```{r}
+my_fun=function(vec){ as.numeric(vec[3]) / sum(count_table$Freq[count_table$year==vec[2]]) *100 }
+count_table$prop=apply(count_table , 1 , my_fun)
+ggplot(count_table, aes(x=year, y=prop, fill=genre)) + geom_area(alpha=0.6 , size=0.5, colour="black")
+```
+
+# Plan for Analysis
+
+## Feature Creation
+- Link 3 Datasets together (Question/Solution/Code)
+
+- Process code samples into a value that accurately represents it's quality
+  -   Only 3 major languages
+  -   May need to separate dataset into languages to get fair comparison
+
+- Process the question statement using NLP into a value that represents difficulty.
+- Develop categories of questions using NLP library
+
+## Planned Analysis
+
+### Classifier for acceptance 
+
+- Create a model using logistic regression on the generated code quality feature 
+- Use that as a classifier that will predict if a solution's "Status" (approved/declined)
+
+### Visualizations
+
+- Correlation matrix showing the correlation between solution features and generated code quality feature
+- Scatterplot between NLP derived difficulty and CodeChef difficulty.
+
+## Current Issues
+
+```{r}
+```
+
+## QUESTIONS? {.smaller}
+```{r}
+#wordcloud(words = d$word, freq = d$freq, min.freq = 1, max.words=150, random.order=FALSE)
+```

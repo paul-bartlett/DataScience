@@ -1,0 +1,23 @@
+---
+output:
+  pdf_document:
+    citation_package: natbib
+    number_sections: false
+    keep_tex: true
+    template: ./cs4414.tex
+title: "Evaluating Patterns in Critically Acclaimed Music"
+runhead: "Project Proposal"
+authorname: Paul Bartlett
+studentnumber: 250753008
+institute: The University Of Western Ontario
+email: pbartle7@uwo.ca
+teacher: Dan Lizotte
+classname: CS4414
+date: "`r format(Sys.time(), '%B %d, %Y')`"
+indent: yes
+bibliography: bibliography.bib
+colorlinks: true
+boldabstract: 
+abstract: The purpose of this analysis is to identify relationships between musical genre of critically acclaimed albums and time. The dataset used for this analysis contains over 18,000 reviews from Pitchfork from January 5th, 1999 to January 8th, 2017. It contains important data including release year, artist name, genre, and a score ranging from 0.0-10.0. The findings may be useful for determining what the most successful genre of critically acclaimed music is for each of the last 18 years.
+---
+# Description of Applied Problem
