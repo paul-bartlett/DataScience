@@ -56,11 +56,12 @@ system("ls ../input")
 ## Project Goals
 
 - Identify which types of genre's rate highest on Pitchfork
+- Check trends in genre's of music over time
 - Identify what features are related to an album's rating and perhaps be able to predict an album's score
  
 # Exploring the Dataset 
 
-## Questions Data {.smaller}
+## Database {.smaller}
 
 ```{r}
 sqlite    <- dbDriver("SQLite")
@@ -77,19 +78,19 @@ dbDisconnect(exampledb)
 str(full_table)
 ```
 
-## Questions Data {.smaller}
+## Summary {.smaller}
 ```{r}
 summary(full_table)
 ```
 
-## Solution Data {.smaller}
+## Missing Data {.smaller}
 
 ```{r}
 # A look at whats missing
 missmap(full_table)
 ```
 
-## Solution Data {.smaller}
+## Missing Data {.smaller}
 
 ```{r}
 #Code missing to none
@@ -102,21 +103,17 @@ unique(full_table$genre)
 table(full_table$pub_year)
 ```
 
-## Solution Data {.smaller}
+## Frequency Table {.smaller}
 
-```{r echo=FALSE, message=FALSE}
-#Lets see how this changes by year, by creating a frequency table by year and genre
+```{r}
 count_table <-table(full_table$genre, full_table$pub_year)
-
 count_table<-as.data.frame(count_table)
 count_table<-rename(count_table, c("Var1"="genre", "Var2"="year"))
-```
-```{r}
 count_table$year <- as.numeric(as.character(count_table$year))
 ggplot(count_table, aes(x=count_table$year, y=count_table$Freq, fill=count_table$genre)) + geom_area()
 ```
 
-## Code Data {.smaller}
+## Proportional {.smaller}
 
 ```{r}
 my_fun=function(vec){ as.numeric(vec[3]) / sum(count_table$Freq[count_table$year==vec[2]]) *100 }
@@ -124,7 +121,7 @@ count_table$prop=apply(count_table , 1 , my_fun)
 ggplot(count_table, aes(x=year, y=prop, fill=genre)) + geom_area(alpha=0.6 , size=0.5, colour="black")
 ```
 
-## Solution Data {.smaller}
+## Box Plot {.smaller}
 
 ```{r}
 full_table$pub_year <- as.character(full_table$pub_year)
@@ -134,7 +131,7 @@ p <- ggplot(full_table, aes(pub_year, score))
 p + geom_boxplot(aes(color=pub_year))
 ```
 
-## Solution Data {.smaller}
+## Box Plot {.smaller}
 
 ```{r}
 #Lets compare scores across genres
@@ -142,9 +139,9 @@ p <- ggplot(full_table, aes(genre, score))
 p + geom_boxplot(aes(color=genre))
 ```
 
-## Solution Data {.smaller}
+## Regression {.smaller}
 
-```{r}
+```{r message=FALSE}
 aggdata <-aggregate(full_table$score, by=list(full_table$genre,full_table$pub_year), FUN=mean, na.rm=TRUE)
 aggdata<-rename(aggdata, c("Group.1"="genre", "Group.2"="year","x"="mean_score"))
 ggplot(data=aggdata, aes(x=year, y=mean_score, colour=genre, group = genre)) + 
