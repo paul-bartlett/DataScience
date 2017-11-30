@@ -9,16 +9,6 @@ output:
     css: "./ioslides.css"
 ---
 
----
-# Prof wants these things:
-# Explain Problem
-# Explain dataset with example of single entry
-# Explain potential datascience methods
-# Ability to answer questions about data
-# Keep it under 10 mins
-# 5% of mark
----
-
 ```{r echo=FALSE, message=FALSE}
 library(RColorBrewer)
 library(forcats)
@@ -30,7 +20,6 @@ library(Amelia)
 library(plyr)
 library(data.table)
 library(SnowballC)
-library(wordcloud)
 library(tm)
 
 # Input data files are available in the "../input/" directory.
@@ -96,8 +85,6 @@ summary(full_table)
 ## Solution Data {.smaller}
 
 ```{r}
-head(full_table)
-
 # A look at whats missing
 missmap(full_table)
 ```
@@ -123,8 +110,6 @@ count_table <-table(full_table$genre, full_table$pub_year)
 
 count_table<-as.data.frame(count_table)
 count_table<-rename(count_table, c("Var1"="genre", "Var2"="year"))
-
-head(count_table)
 ```
 ```{r}
 count_table$year <- as.numeric(as.character(count_table$year))
@@ -139,36 +124,33 @@ count_table$prop=apply(count_table , 1 , my_fun)
 ggplot(count_table, aes(x=year, y=prop, fill=genre)) + geom_area(alpha=0.6 , size=0.5, colour="black")
 ```
 
-# Plan for Analysis
-
-## Feature Creation
-- Link 3 Datasets together (Question/Solution/Code)
-
-- Process code samples into a value that accurately represents it's quality
-  -   Only 3 major languages
-  -   May need to separate dataset into languages to get fair comparison
-
-- Process the question statement using NLP into a value that represents difficulty.
-- Develop categories of questions using NLP library
-
-## Planned Analysis
-
-### Classifier for acceptance 
-
-- Create a model using logistic regression on the generated code quality feature 
-- Use that as a classifier that will predict if a solution's "Status" (approved/declined)
-
-### Visualizations
-
-- Correlation matrix showing the correlation between solution features and generated code quality feature
-- Scatterplot between NLP derived difficulty and CodeChef difficulty.
-
-## Current Issues
+## Solution Data {.smaller}
 
 ```{r}
+full_table$pub_year <- as.character(full_table$pub_year)
+
+#Lets see if scores change over the years
+p <- ggplot(full_table, aes(pub_year, score))
+p + geom_boxplot(aes(color=pub_year))
+```
+
+## Solution Data {.smaller}
+
+```{r}
+#Lets compare scores across genres
+p <- ggplot(full_table, aes(genre, score))
+p + geom_boxplot(aes(color=genre))
+```
+
+## Solution Data {.smaller}
+
+```{r}
+aggdata <-aggregate(full_table$score, by=list(full_table$genre,full_table$pub_year), FUN=mean, na.rm=TRUE)
+aggdata<-rename(aggdata, c("Group.1"="genre", "Group.2"="year","x"="mean_score"))
+ggplot(data=aggdata, aes(x=year, y=mean_score, colour=genre, group = genre)) + 
+  geom_smooth(method = "auto", se = FALSE)
 ```
 
 ## QUESTIONS? {.smaller}
 ```{r}
-#wordcloud(words = d$word, freq = d$freq, min.freq = 1, max.words=150, random.order=FALSE)
 ```
