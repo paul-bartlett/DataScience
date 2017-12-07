@@ -20,4 +20,115 @@ colorlinks: true
 boldabstract: 
 abstract: The purpose of this analysis is to identify relationships between musical genre of critically acclaimed albums and time. The dataset used for this analysis contains over 18,000 reviews from Pitchfork from January 5th, 1999 to January 8th, 2017. It contains important data including release year, artist name, genre, and a score ranging from 0.0-10.0. The findings may be useful for determining what the most successful genre of critically acclaimed music is for each of the last 18 years.
 ---
+
+```{r echo=FALSE, message=FALSE}
+library(RColorBrewer)
+library(forcats)
+library(ggplot2) # Data visualization
+library(ggvis)
+library(readr) # CSV file I/O, e.g. the read_csv function
+library("RSQLite") # SQLite
+library(Rcpp)
+library(Amelia) 
+library(plyr)
+library(data.table)
+library(SnowballC)
+library(tm)
+library(class)
+library(gmodels)
+
+# Input data files are available in the "../input/" directory.
+# For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
+
+system("ls ../input")
+
+# Any results you write to the current directory are saved as output.
+```
 # Description of Applied Problem
+## Existing solutions to similar problems
+The trends of popular music can easily be attained through the various Billboard charts that have existed since 1955. A group of scientists from the University of London analyzed around 17,000 songs that charted on the U.S. Billboard Hot 100 over the last 50 years and created a visualization of the popularity of musical genres over time [@Billboard100]. The problem with getting data from these charts is that popular music generally isn't critically acclaimed, and is therefore not as interesting as data from sources that evaluate music more objectively. Another source that uses visualization of this problem well is musicmap [@musicmap]. The website contains information about hundreds of genres of music and their history. It provides a great overview of all the popular strands of music, but doesn't go into too much depth about specific artists or albums. It does provide a good overview of all genres regardless of popularity, but I'm more interested in evaluating the history of genres from the best albums created by artists.
+
+## Pitchfork solution
+As various breakthroughs in music happen, there is generally a shift in the type of genres that become popular. Artists get influenced by other talented artists and adapt part of their style into their own music. Using a dataset that includes over 18,000 reviews from Pitchfork, I will be going through the data to find how critically acclaimed music has changed over time. In addition, I will also be looking at which release from an artist is the most well received. A general pattern I've seen when listening to several albums from an artist is that the first 2-3 albums tend to be the best from their discography. I would like to use the data to see how the quality of artist’s releases changes over time.
+
+# Description of Available Data
+## Pitchfork
+The dataset that I will be using is taken from Pitchfork. Pitchfork is an online magazine that focuses on reviewing both popular and independent music. It is one of the most popular platforms for users interested in finding higher quality music. The data set for Pitchfork Reviews from January 5th, 1999 to January 8th, 2017 is available on kaggle [@kaggle].  There are 18,393 reviews that include important data including release year, artist name, genre, and a score ranging from 0.0-10.0. Considering that Pitchfork is one of the longest running online review sites, it makes it a primary choice for useful data. There may be some bias in review scores, notably staff preference, but Pitchfork does cover a lot of genres with ratings similar to many other music review platforms. Through looking at 18 years of data, we should be able to find some notable trends. 
+
+## Best New Music
+Pitchfork features a section called "Best New Music" for highlighting recent releases that the staff found to stand out in a positive way. These albums generally have a minimum score of 8.0 and are another useful way for tracking the best music on the site. The dataset includes an identifier for "Best New Music", and would be a useful way to sort critically acclaimed releases.
+
+# Plan for Analysis and Visualization
+## Genre
+### Analysis
+To analyze this data properly, we must use a method to take out only the best reviews from the dataset. Fortunately, Pitchfork has a system to distinguish the best albums called "Best New Music". Albums that receive this tag are guaranteed to be of higher quality and therefore valid for our analysis. Unfortunately, this feature launched in 2003 so using it would leave out all the music before it was launched. By looking at the data, we will be able to find the typical rating for an album that gets the "Best New Music" tag and use that rating to take all albums from the data set that are higher than the threshold. From this, we should be able to classify each album that meets the requirement by year and genre so that it can be used for visualization.
+
+```{r echo=FALSE, message=FALSE}
+sqlite    <- dbDriver("SQLite")
+exampledb <- dbConnect(sqlite,"../input/database.sqlite")
+
+#Take the variables we are interested in
+full_table <- dbGetQuery(exampledb,"SELECT reviews.reviewid, reviews.score, reviews.best_new_music, 
+reviews.author, reviews.pub_year, genres.genre FROM reviews JOIN genres 
+ON reviews.reviewid = genres.reviewid")
+
+dbDisconnect(exampledb)
+
+#Review statistics
+str(full_table)
+
+summary(full_table)
+
+# A look at whats missing
+#missmap(full_table)
+
+#Code missing to none
+full_table$genre[is.na(full_table$genre)] <- "none"
+
+#Lets see how many genres we are working with
+#unique(full_table$genre)
+
+#Lets look at how many reviews there are a year
+#table(full_table$pub_year)
+
+count_table <- table(full_table$genre, full_table$pub_year)
+count_table <- as.data.frame(count_table)
+count_table <- rename(count_table, c("Var1"="genre", "Var2"="year"))
+count_table$year <- as.numeric(as.character(count_table$year))
+#ggplot(count_table, aes(x=count_table$year, y=count_table$Freq, fill=count_table$genre)) + geom_area()
+
+my_fun=function(vec){ as.numeric(vec[3]) / sum(count_table$Freq[count_table$year==vec[2]]) *100 }
+count_table$prop=apply(count_table , 1 , my_fun)
+#ggplot(count_table, aes(x=year, y=prop, fill=genre)) + geom_area(alpha=0.6 , size=0.5, colour="black")
+
+normalize <- function(x) {
+return ((x - min(x)) / (max(x) - min(x))) }
+
+full_table_n <- as.data.frame(lapply(full_table[c(2,3,5)], normalize))
+summary(full_table_n)
+
+full_table$pub_year <- as.character(full_table$pub_year)
+
+#Lets see if scores change over the years
+#p <- ggplot(full_table, aes(pub_year, score))
+#p + geom_boxplot(aes(color=pub_year))
+
+#Lets compare scores across genres
+#p <- ggplot(full_table, aes(genre, score))
+#p + geom_boxplot(aes(color=genre))
+
+#aggdata <-aggregate(full_table$score, by=list(full_table$genre,full_table$pub_year), FUN=mean, na.rm=TRUE)
+#aggdata<-rename(aggdata, c("Group.1"="genre", "Group.2"="year","x"="mean_score"))
+#ggplot(data=aggdata, aes(x=year, y=mean_score, colour=genre, group = genre)) + geom_smooth(method = "auto", se = FALSE)
+#full_table %>% ggvis(score, year) %>% layer_points()
+```
+
+### Visualization
+For visualization, I would like to do something similar to what was done for visualizing the U.S. Billboard Hot 100 over the last 50 years [@BillboardFigure]. The chart features spindles for each genre that run vertically with the width of the spindles proportional to the frequency of the genre. The y-axis contains the year so the viewer can easily compare between each year to see what genre is the most popular or the least popular. Since I do not have much experience with visualization, it is possible that doing something similar will be too difficult to achieve. A simple way to visualize this in a similar way would be to use a line graph, with each line representing a genre, the x-axis covering each year, and the y-axis covering the frequency. 
+
+## Release
+### Analysis
+To analyze what release number is considered to be the best critically, we will have to query all artists that have multiple releases on the site. A similar analysis and visualization was done on kaggle by the author of the data [@kaggleFirst]. The author only covered the first and last album, but did complete an analysis on the number of reviews for each artist. After this, we need to get the review scores of each album from each of the artists with multiple releases. There might be some bias in how release numbers are scored, mainly that a poor release could potentially prevent the staff from Pitchfork from reviewing later releases.
+
+### Visualization
+A Box plot would be perfectly suited for this data. Being able to visualize the entire range of score for the releases while also seeing the median and upper and lower quartiles is highly beneficial. There would be a separate box plot for each release number up to the maximum reviewed releases by an artist.
