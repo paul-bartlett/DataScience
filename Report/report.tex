@@ -55,7 +55,7 @@ January 5th, 1999 to January 8th, 2017. It contains important data
 including release year, artist name, genre, and a score ranging from
 0.0-10.0. The findings may be useful for determining what the most
 successful genre of critically acclaimed music is for each of the last
-18 years. \end{abstract} 
+18 years and what is going to be the most successful in the future. \end{abstract} 
 
 
 \begin{verbatim}
@@ -89,15 +89,15 @@ artists.
 
 As various breakthroughs in music happen, there is generally a shift in
 the type of genres that become popular. Artists get influenced by other
-talented artists and adapt part of their style into their own music.
-Using a dataset that includes over 18,000 reviews from Pitchfork, I will
-be going through the data to find how critically acclaimed music has
-changed over time. In addition, I will also be looking at which release
-from an artist is the most well received. A general pattern I've seen
-when listening to several albums from an artist is that the first 2-3
-albums tend to be the best from their discography. I would like to use
-the data to see how the quality of artistâs releases changes over
-time.
+talented artists and adapt part of their style into their own music. In
+addition, a good Pitchfork review can have a significant inpact on an
+album's popularity. This is very important for independant artists
+because they don't have the resources or backing of a large label to get
+their name out there. Using a dataset that includes over 18,000 reviews
+from Pitchfork, I will be going through the data to find how critically
+acclaimed music has changed over time. In addition, I will be looking
+into applications of machine learning for predicting an album's score to
+find out what influences this.
 
 \section{Description of Available
 Data}\label{description-of-available-data}
@@ -118,21 +118,9 @@ Pitchfork does cover a lot of genres with ratings similar to many other
 music review platforms. Through looking at 18 years of data, we should
 be able to find some notable trends.
 
-\subsection{Best New Music}\label{best-new-music}
-
-Pitchfork features a section called ``Best New Music'' for highlighting
-recent releases that the staff found to stand out in a positive way.
-These albums generally have a minimum score of 8.0 and are another
-useful way for tracking the best music on the site. The dataset includes
-an identifier for ``Best New Music'', and would be a useful way to sort
-critically acclaimed releases.
-
-\section{Plan for Analysis and
-Visualization}\label{plan-for-analysis-and-visualization}
+\section{Analysis and Visualization}\label{analysis-and-visualization}
 
 \subsection{Genre}\label{genre}
-
-\subsubsection{Analysis}\label{analysis}
 
 To analyze this data properly, we must use a method to take out only the
 best reviews from the dataset. Fortunately, Pitchfork has a system to
@@ -162,7 +150,7 @@ x-axis covering each year, and the y-axis covering the frequency.
 
 \subsection{Release}\label{release}
 
-\subsubsection{Analysis}\label{analysis-1}
+\subsubsection{Analysis}\label{analysis}
 
 To analyze what release number is considered to be the best critically,
 we will have to query all artists that have multiple releases on the
@@ -183,65 +171,35 @@ the median and upper and lower quartiles is highly beneficial. There
 would be a separate box plot for each release number up to the maximum
 reviewed releases by an artist.
 
-\begin{verbatim}
-## 'data.frame':    22690 obs. of  6 variables:
-##  $ reviewid      : int  22703 22721 22659 22661 22725 22722 22704 22694 22714 22724 ...
-##  $ score         : num  9.3 7.9 7.3 9 8.1 7.4 7.1 7 7.7 5.3 ...
-##  $ best_new_music: int  0 0 0 1 0 0 0 0 0 0 ...
-##  $ author        : chr  "nate patrin" "zoe camp" "david glickman" "jenn pelly" ...
-##  $ pub_year      : int  2017 2017 2017 2017 2017 2017 2017 2017 2017 2017 ...
-##  $ genre         : chr  "electronic" "metal" "rock" "rock" ...
-\end{verbatim}
+\newpage
 
-\begin{verbatim}
-##     reviewid         score        best_new_music       author         
-##  Min.   :    1   Min.   : 0.000   Min.   :0.00000   Length:22690      
-##  1st Qu.: 7103   1st Qu.: 6.400   1st Qu.:0.00000   Class :character  
-##  Median :12426   Median : 7.200   Median :0.00000   Mode  :character  
-##  Mean   :12035   Mean   : 6.991   Mean   :0.04989                     
-##  3rd Qu.:17063   3rd Qu.: 7.800   3rd Qu.:0.00000                     
-##  Max.   :22745   Max.   :10.000   Max.   :1.00000                     
-##     pub_year       genre          
-##  Min.   :1999   Length:22690      
-##  1st Qu.:2005   Class :character  
-##  Median :2008   Mode  :character  
-##  Mean   :2008                     
-##  3rd Qu.:2012                     
-##  Max.   :2017
-\end{verbatim}
+\newpage
 
-\begin{verbatim}
-##      score        best_new_music       pub_year     
-##  Min.   :0.0000   Min.   :0.00000   Min.   :0.0000  
-##  1st Qu.:0.6400   1st Qu.:0.00000   1st Qu.:0.3333  
-##  Median :0.7200   Median :0.00000   Median :0.5000  
-##  Mean   :0.6991   Mean   :0.04989   Mean   :0.5248  
-##  3rd Qu.:0.7800   3rd Qu.:0.00000   3rd Qu.:0.7222  
-##  Max.   :1.0000   Max.   :1.00000   Max.   :1.0000
-\end{verbatim}
+\begin{figure}
+\centering
+\includegraphics{report_files/figure-latex/score_year.pdf}
+\caption{Boxplots of score by year \label{fig1}}
+\end{figure}
 
-\begin{verbatim}
-## [1] 18154     6
-\end{verbatim}
+\newpage
 
-\begin{verbatim}
-##              freq percentage
-## electronic   3083 16.9824832
-## experimental 1432  7.8880687
-## folk/country  547  3.0131101
-## global        170  0.9364327
-## jazz          342  1.8838823
-## metal         698  3.8448827
-## none         1866 10.2787265
-## pop/r&b      1157  6.3732511
-## rap          1253  6.9020602
-## rock         7606 41.8971026
-\end{verbatim}
+\newpage
 
-\includegraphics{report_files/figure-latex/unnamed-chunk-2-1.pdf}
-\includegraphics{report_files/figure-latex/unnamed-chunk-2-2.pdf}
-\includegraphics{report_files/figure-latex/unnamed-chunk-2-3.pdf}
-\includegraphics{report_files/figure-latex/unnamed-chunk-2-4.pdf}
+\begin{figure}
+\centering
+\includegraphics{report_files/figure-latex/score_genre.pdf}
+\caption{Boxplots of score by genre \label{fig2}}
+\end{figure}
+
+\newpage
+
+\begin{figure}
+\centering
+\includegraphics{report_files/figure-latex/scatterplot_matrix.pdf}
+\caption{Scatterplot matrix of features \label{fig3}}
+\end{figure}
+
+\newpage
 
 \bibliography{bibliography.bib}
 \bibliographystyle{plainnat}
