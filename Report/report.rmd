@@ -25,7 +25,7 @@ abstract: The purpose of this analysis is to identify relationships between musi
 library(RColorBrewer)
 library(forcats)
 library(ggplot2) # Data visualization
-library(ggvis)
+#library(ggvis)
 library(readr) # CSV file I/O, e.g. the read_csv function
 library("RSQLite") # SQLite
 library(Rcpp)
@@ -36,6 +36,8 @@ library(SnowballC)
 library(tm)
 library(class)
 library(gmodels)
+library(caret)
+library(randomForest)
 
 # Input data files are available in the "../input/" directory.
 # For example, running this (by clicking run or pressing Shift+Enter) will list the files in the input directory
@@ -63,35 +65,45 @@ Pitchfork features a section called "Best New Music" for highlighting recent rel
 ### Analysis
 To analyze this data properly, we must use a method to take out only the best reviews from the dataset. Fortunately, Pitchfork has a system to distinguish the best albums called "Best New Music". Albums that receive this tag are guaranteed to be of higher quality and therefore valid for our analysis. Unfortunately, this feature launched in 2003 so using it would leave out all the music before it was launched. By looking at the data, we will be able to find the typical rating for an album that gets the "Best New Music" tag and use that rating to take all albums from the data set that are higher than the threshold. From this, we should be able to classify each album that meets the requirement by year and genre so that it can be used for visualization.
 
+### Visualization
+For visualization, I would like to do something similar to what was done for visualizing the U.S. Billboard Hot 100 over the last 50 years [@BillboardFigure]. The chart features spindles for each genre that run vertically with the width of the spindles proportional to the frequency of the genre. The y-axis contains the year so the viewer can easily compare between each year to see what genre is the most popular or the least popular. Since I do not have much experience with visualization, it is possible that doing something similar will be too difficult to achieve. A simple way to visualize this in a similar way would be to use a line graph, with each line representing a genre, the x-axis covering each year, and the y-axis covering the frequency. 
+
+## Release
+### Analysis
+To analyze what release number is considered to be the best critically, we will have to query all artists that have multiple releases on the site. A similar analysis and visualization was done on kaggle by the author of the data [@kaggleFirst]. The author only covered the first and last album, but did complete an analysis on the number of reviews for each artist. After this, we need to get the review scores of each album from each of the artists with multiple releases. There might be some bias in how release numbers are scored, mainly that a poor release could potentially prevent the staff from Pitchfork from reviewing later releases.
+
+### Visualization
+A Box plot would be perfectly suited for this data. Being able to visualize the entire range of score for the releases while also seeing the median and upper and lower quartiles is highly beneficial. There would be a separate box plot for each release number up to the maximum reviewed releases by an artist.
+
 ```{r echo=FALSE, message=FALSE}
 sqlite    <- dbDriver("SQLite")
 exampledb <- dbConnect(sqlite,"../input/database.sqlite")
 
 #Take the variables we are interested in
-full_table <- dbGetQuery(exampledb,"SELECT reviews.reviewid, reviews.score, reviews.best_new_music, 
+dataset <- dbGetQuery(exampledb,"SELECT reviews.reviewid, reviews.score, reviews.best_new_music, 
 reviews.author, reviews.pub_year, genres.genre FROM reviews JOIN genres 
 ON reviews.reviewid = genres.reviewid")
 
 dbDisconnect(exampledb)
 
 #Review statistics
-str(full_table)
+str(dataset)
 
-summary(full_table)
+summary(dataset)
 
 # A look at whats missing
-#missmap(full_table)
+#missmap(dataset)
 
 #Code missing to none
-full_table$genre[is.na(full_table$genre)] <- "none"
+dataset$genre[is.na(dataset$genre)] <- "none"
 
 #Lets see how many genres we are working with
-#unique(full_table$genre)
+#unique(dataset$genre)
 
 #Lets look at how many reviews there are a year
-#table(full_table$pub_year)
+#table(dataset$pub_year)
 
-count_table <- table(full_table$genre, full_table$pub_year)
+count_table <- table(dataset$genre, dataset$pub_year)
 count_table <- as.data.frame(count_table)
 count_table <- rename(count_table, c("Var1"="genre", "Var2"="year"))
 count_table$year <- as.numeric(as.character(count_table$year))
@@ -104,31 +116,67 @@ count_table$prop=apply(count_table , 1 , my_fun)
 normalize <- function(x) {
 return ((x - min(x)) / (max(x) - min(x))) }
 
-full_table_n <- as.data.frame(lapply(full_table[c(2,3,5)], normalize))
-summary(full_table_n)
+dataset_n <- as.data.frame(lapply(dataset[c(2,3,5)], normalize))
+summary(dataset_n)
 
-full_table$pub_year <- as.character(full_table$pub_year)
+# create a list of 80% of the rows in the original dataset we can use for training
+validation_index <- createDataPartition(dataset$score, p=0.8, list=FALSE)
+# select 20% of the data for validation
+validation <- dataset[-validation_index,]
+# use the remaining 80% of data to training and testing the models
+dataset <- dataset[validation_index,]
+
+# dimensions of dataset
+dim(dataset)
+
+# summarize the class distribution
+percentage <- prop.table(table(dataset$genre)) * 100
+cbind(freq=table(dataset$genre), percentage=percentage)
+
+# split input and output
+x <- dataset[,c(3,5,6)]
+y <- dataset[,2]
+
+dataset$pub_year <- as.character(dataset$pub_year)
 
 #Lets see if scores change over the years
-#p <- ggplot(full_table, aes(pub_year, score))
-#p + geom_boxplot(aes(color=pub_year))
+p <- ggplot(dataset, aes(pub_year, score))
+p + geom_boxplot(aes(color=pub_year))
 
 #Lets compare scores across genres
-#p <- ggplot(full_table, aes(genre, score))
-#p + geom_boxplot(aes(color=genre))
+p <- ggplot(dataset, aes(genre, score))
+p + geom_boxplot(aes(color=genre))
 
-#aggdata <-aggregate(full_table$score, by=list(full_table$genre,full_table$pub_year), FUN=mean, na.rm=TRUE)
+# barplot for class breakdown
+plot(y)
+
+# scatterplot matrix
+#featurePlot(x=x, y=y, plot="density")
+
+# Run algorithms using 10-fold cross validation
+control <- trainControl(method="cv", number=10)
+metric <- "Accuracy"
+
+# a) linear algorithms
+#set.seed(7)
+#fit.lda <- train(score~., data=dataset, method="lda", metric=metric, trControl=control)
+# b) nonlinear algorithms
+# CART
+#set.seed(7)
+#fit.cart <- train(score~., data=dataset, method="rpart", metric=metric, trControl=control)
+# kNN
+#set.seed(7)
+#fit.knn <- train(score~., data=dataset, method="knn", metric=metric, trControl=control)
+# c) advanced algorithms
+# SVM
+#set.seed(7)
+#fit.svm <- train(score~., data=dataset, method="svmRadial", metric=metric, trControl=control)
+# Random Forest
+set.seed(7)
+fit.rf <- train(score~., data=dataset, method="rf", metric=metric, trControl=control)
+
+#aggdata <-aggregate(dataset$score, by=list(dataset$genre,dataset$pub_year), FUN=mean, na.rm=TRUE)
 #aggdata<-rename(aggdata, c("Group.1"="genre", "Group.2"="year","x"="mean_score"))
 #ggplot(data=aggdata, aes(x=year, y=mean_score, colour=genre, group = genre)) + geom_smooth(method = "auto", se = FALSE)
-#full_table %>% ggvis(score, year) %>% layer_points()
+#dataset %>% ggvis(score, year) %>% layer_points()
 ```
-
-### Visualization
-For visualization, I would like to do something similar to what was done for visualizing the U.S. Billboard Hot 100 over the last 50 years [@BillboardFigure]. The chart features spindles for each genre that run vertically with the width of the spindles proportional to the frequency of the genre. The y-axis contains the year so the viewer can easily compare between each year to see what genre is the most popular or the least popular. Since I do not have much experience with visualization, it is possible that doing something similar will be too difficult to achieve. A simple way to visualize this in a similar way would be to use a line graph, with each line representing a genre, the x-axis covering each year, and the y-axis covering the frequency. 
-
-## Release
-### Analysis
-To analyze what release number is considered to be the best critically, we will have to query all artists that have multiple releases on the site. A similar analysis and visualization was done on kaggle by the author of the data [@kaggleFirst]. The author only covered the first and last album, but did complete an analysis on the number of reviews for each artist. After this, we need to get the review scores of each album from each of the artists with multiple releases. There might be some bias in how release numbers are scored, mainly that a poor release could potentially prevent the staff from Pitchfork from reviewing later releases.
-
-### Visualization
-A Box plot would be perfectly suited for this data. Being able to visualize the entire range of score for the releases while also seeing the median and upper and lower quartiles is highly beneficial. There would be a separate box plot for each release number up to the maximum reviewed releases by an artist.

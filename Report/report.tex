@@ -58,13 +58,15 @@ successful genre of critically acclaimed music is for each of the last
 18 years. \end{abstract} 
 
 
-\hypertarget{description-of-applied-problem}{%
-\section{Description of Applied
-Problem}\label{description-of-applied-problem}}
+\begin{verbatim}
+## Warning: running command 'ls ../input' had status 127
+\end{verbatim}
 
-\hypertarget{existing-solutions-to-similar-problems}{%
+\section{Description of Applied
+Problem}\label{description-of-applied-problem}
+
 \subsection{Existing solutions to similar
-problems}\label{existing-solutions-to-similar-problems}}
+problems}\label{existing-solutions-to-similar-problems}
 
 The trends of popular music can easily be attained through the various
 Billboard charts that have existed since 1955. A group of scientists
@@ -83,8 +85,7 @@ overview of all genres regardless of popularity, but I'm more interested
 in evaluating the history of genres from the best albums created by
 artists.
 
-\hypertarget{pitchfork-solution}{%
-\subsection{Pitchfork solution}\label{pitchfork-solution}}
+\subsection{Pitchfork solution}\label{pitchfork-solution}
 
 As various breakthroughs in music happen, there is generally a shift in
 the type of genres that become popular. Artists get influenced by other
@@ -95,14 +96,13 @@ changed over time. In addition, I will also be looking at which release
 from an artist is the most well received. A general pattern I've seen
 when listening to several albums from an artist is that the first 2-3
 albums tend to be the best from their discography. I would like to use
-the data to see how the quality of artist's releases changes over time.
+the data to see how the quality of artistâs releases changes over
+time.
 
-\hypertarget{description-of-available-data}{%
 \section{Description of Available
-Data}\label{description-of-available-data}}
+Data}\label{description-of-available-data}
 
-\hypertarget{pitchfork}{%
-\subsection{Pitchfork}\label{pitchfork}}
+\subsection{Pitchfork}\label{pitchfork}
 
 The dataset that I will be using is taken from Pitchfork. Pitchfork is
 an online magazine that focuses on reviewing both popular and
@@ -118,8 +118,7 @@ Pitchfork does cover a lot of genres with ratings similar to many other
 music review platforms. Through looking at 18 years of data, we should
 be able to find some notable trends.
 
-\hypertarget{best-new-music}{%
-\subsection{Best New Music}\label{best-new-music}}
+\subsection{Best New Music}\label{best-new-music}
 
 Pitchfork features a section called ``Best New Music'' for highlighting
 recent releases that the staff found to stand out in a positive way.
@@ -128,15 +127,12 @@ useful way for tracking the best music on the site. The dataset includes
 an identifier for ``Best New Music'', and would be a useful way to sort
 critically acclaimed releases.
 
-\hypertarget{plan-for-analysis-and-visualization}{%
 \section{Plan for Analysis and
-Visualization}\label{plan-for-analysis-and-visualization}}
+Visualization}\label{plan-for-analysis-and-visualization}
 
-\hypertarget{genre}{%
-\subsection{Genre}\label{genre}}
+\subsection{Genre}\label{genre}
 
-\hypertarget{analysis}{%
-\subsubsection{Analysis}\label{analysis}}
+\subsubsection{Analysis}\label{analysis}
 
 To analyze this data properly, we must use a method to take out only the
 best reviews from the dataset. Fortunately, Pitchfork has a system to
@@ -149,6 +145,43 @@ album that gets the ``Best New Music'' tag and use that rating to take
 all albums from the data set that are higher than the threshold. From
 this, we should be able to classify each album that meets the
 requirement by year and genre so that it can be used for visualization.
+
+\subsubsection{Visualization}\label{visualization}
+
+For visualization, I would like to do something similar to what was done
+for visualizing the U.S. Billboard Hot 100 over the last 50 years
+\citep{BillboardFigure}. The chart features spindles for each genre that
+run vertically with the width of the spindles proportional to the
+frequency of the genre. The y-axis contains the year so the viewer can
+easily compare between each year to see what genre is the most popular
+or the least popular. Since I do not have much experience with
+visualization, it is possible that doing something similar will be too
+difficult to achieve. A simple way to visualize this in a similar way
+would be to use a line graph, with each line representing a genre, the
+x-axis covering each year, and the y-axis covering the frequency.
+
+\subsection{Release}\label{release}
+
+\subsubsection{Analysis}\label{analysis-1}
+
+To analyze what release number is considered to be the best critically,
+we will have to query all artists that have multiple releases on the
+site. A similar analysis and visualization was done on kaggle by the
+author of the data \citep{kaggleFirst}. The author only covered the
+first and last album, but did complete an analysis on the number of
+reviews for each artist. After this, we need to get the review scores of
+each album from each of the artists with multiple releases. There might
+be some bias in how release numbers are scored, mainly that a poor
+release could potentially prevent the staff from Pitchfork from
+reviewing later releases.
+
+\subsubsection{Visualization}\label{visualization-1}
+
+A Box plot would be perfectly suited for this data. Being able to
+visualize the entire range of score for the releases while also seeing
+the median and upper and lower quartiles is highly beneficial. There
+would be a separate box plot for each release number up to the maximum
+reviewed releases by an artist.
 
 \begin{verbatim}
 ## 'data.frame':    22690 obs. of  6 variables:
@@ -187,46 +220,28 @@ requirement by year and genre so that it can be used for visualization.
 ##  Max.   :1.0000   Max.   :1.00000   Max.   :1.0000
 \end{verbatim}
 
-\hypertarget{visualization}{%
-\subsubsection{Visualization}\label{visualization}}
+\begin{verbatim}
+## [1] 18154     6
+\end{verbatim}
 
-For visualization, I would like to do something similar to what was done
-for visualizing the U.S. Billboard Hot 100 over the last 50 years
-\citep{BillboardFigure}. The chart features spindles for each genre that
-run vertically with the width of the spindles proportional to the
-frequency of the genre. The y-axis contains the year so the viewer can
-easily compare between each year to see what genre is the most popular
-or the least popular. Since I do not have much experience with
-visualization, it is possible that doing something similar will be too
-difficult to achieve. A simple way to visualize this in a similar way
-would be to use a line graph, with each line representing a genre, the
-x-axis covering each year, and the y-axis covering the frequency.
+\begin{verbatim}
+##              freq percentage
+## electronic   3083 16.9824832
+## experimental 1432  7.8880687
+## folk/country  547  3.0131101
+## global        170  0.9364327
+## jazz          342  1.8838823
+## metal         698  3.8448827
+## none         1866 10.2787265
+## pop/r&b      1157  6.3732511
+## rap          1253  6.9020602
+## rock         7606 41.8971026
+\end{verbatim}
 
-\hypertarget{release}{%
-\subsection{Release}\label{release}}
-
-\hypertarget{analysis-1}{%
-\subsubsection{Analysis}\label{analysis-1}}
-
-To analyze what release number is considered to be the best critically,
-we will have to query all artists that have multiple releases on the
-site. A similar analysis and visualization was done on kaggle by the
-author of the data \citep{kaggleFirst}. The author only covered the
-first and last album, but did complete an analysis on the number of
-reviews for each artist. After this, we need to get the review scores of
-each album from each of the artists with multiple releases. There might
-be some bias in how release numbers are scored, mainly that a poor
-release could potentially prevent the staff from Pitchfork from
-reviewing later releases.
-
-\hypertarget{visualization-1}{%
-\subsubsection{Visualization}\label{visualization-1}}
-
-A Box plot would be perfectly suited for this data. Being able to
-visualize the entire range of score for the releases while also seeing
-the median and upper and lower quartiles is highly beneficial. There
-would be a separate box plot for each release number up to the maximum
-reviewed releases by an artist.
+\includegraphics{report_files/figure-latex/unnamed-chunk-2-1.pdf}
+\includegraphics{report_files/figure-latex/unnamed-chunk-2-2.pdf}
+\includegraphics{report_files/figure-latex/unnamed-chunk-2-3.pdf}
+\includegraphics{report_files/figure-latex/unnamed-chunk-2-4.pdf}
 
 \bibliography{bibliography.bib}
 \bibliographystyle{plainnat}
