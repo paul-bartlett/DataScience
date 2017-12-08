@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.12.7)  8 DEC 2017 13:57
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (MiKTeX 2.9.6500 64-bit) (preloaded format=pdflatex 2017.12.7)  8 DEC 2017 16:45
 entering extended mode
 **./report.tex
 (report.tex
@@ -286,11 +286,6 @@ Overfull \hbox (5.1225pt too wide) in paragraph at lines 50--50
  []
 
 
-Overfull \hbox (59.11993pt too wide) in paragraph at lines 63--63
-[]\OT1/cmtt/m/n/10 ## Warning: running command 'ls ../input' had status 127[] 
- []
-
-
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
 [1{C:/Users/Paul/AppData/Local/MiKTeX/2.9/pdftex/config/pdftex.map}
@@ -300,54 +295,11 @@ Underfull \vbox (badness 10000) has occurred while \output is active []
 ]
 Underfull \vbox (badness 10000) has occurred while \output is active []
 
-[2]
-<report_files/figure-latex/score_year.pdf, id=49, pagebox=cropbox, 469.755pt x 
-325.215pt>
-File: report_files/figure-latex/score_year.pdf Graphic file (type pdf)
-<use report_files/figure-latex/score_year.pdf>
-Package pdftex.def Info: report_files/figure-latex/score_year.pdf  used on inpu
-t line 180. on input line 180.
-Package pdftex.def Info: Requested size: 469.75386pt x 325.2142pt on input line
- 180.
 
-Overfull \hbox (234.87636pt too wide) in paragraph at lines 180--181
- [][] 
- []
+Underfull \vbox (badness 10000) has occurred while \output is active []
 
-<report_files/figure-latex/score_genre.pdf, id=50, pagebox=cropbox, 469.755pt x
- 325.215pt>
-File: report_files/figure-latex/score_genre.pdf Graphic file (type pdf)
-<use report_files/figure-latex/score_genre.pdf>
-Package pdftex.def Info: report_files/figure-latex/score_genre.pdf  used on inp
-ut line 190. on input line 190.
-Package pdftex.def Info: Requested size: 469.75386pt x 325.2142pt on input line
- 190.
-
-Overfull \hbox (234.87636pt too wide) in paragraph at lines 190--191
- [][] 
- []
-
-<report_files/figure-latex/scatterplot_matrix.pdf, id=51, pagebox=cropbox, 469.
-755pt x 325.215pt>
-File: report_files/figure-latex/scatterplot_matrix.pdf Graphic file (type pdf)
-<use report_files/figure-latex/scatterplot_matrix.pdf>
-Package pdftex.def Info: report_files/figure-latex/scatterplot_matrix.pdf  used
- on input line 198. on input line 198.
-Package pdftex.def Info: Requested size: 469.75386pt x 325.2142pt on input line
- 198.
-
-Overfull \hbox (234.87636pt too wide) in paragraph at lines 198--199
- [][] 
- []
-
-(report.bbl
-Underfull \hbox (badness 5119) in paragraph at lines 9--12
-\OT1/cmr/m/n/10 URL [][]$\OT1/cmtt/m/n/10 https : / / www . kaggle . com / nola
-nbconaway /
- []
-
-
-Underfull \hbox (badness 5119) in paragraph at lines 14--18
+[2] (report.bbl
+Underfull \hbox (badness 5119) in paragraph at lines 15--18
 \OT1/cmr/m/n/10 URL [][]$\OT1/cmtt/m/n/10 https : / / www . kaggle . com / nola
 nbconaway /
  []
@@ -366,52 +318,48 @@ Underfull \hbox (badness 2653) in paragraph at lines 25--29
  []
 
 
+Underfull \hbox (badness 1189) in paragraph at lines 25--29
+\OT1/cmr/m/n/10 tion of pop-u-lar mu-sic: Usa 19602010.  2015.
+ []
+
+
 Underfull \hbox (badness 10000) in paragraph at lines 25--29
 \OT1/cmr/m/n/10 URL [][]$\OT1/cmtt/m/n/10 http : / / pubmedcentralcanada . ca /
  pmcc /
  []
 
-
-Underfull \hbox (badness 10000) in paragraph at lines 31--35
-\OT1/cmr/m/n/10 URL [][]$\OT1/cmtt/m/n/10 http : / / pubmedcentralcanada . ca /
- pmcc /
- []
-
 )
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 207.
-[3 <./report_files/figure-latex/score_year.pdf> <./report_files/figure-latex/sc
-ore_genre.pdf>] [4
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 241.
+[3
 
- <./report_files/figure-latex/scatterplot_matrix.pdf>]
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 207.
+]
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 241.
 (report.aux)
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 207.
-Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 207.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 241.
+Package atveryend Info: Executing hook `AtEndAfterFileList' on input line 241.
 Package rerunfilecheck Info: File `report.out' has not changed.
 (rerunfilecheck)             Checksum: D41D8CD98F00B204E9800998ECF8427E;0.
-Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 207.
+Package atveryend Info: Empty hook `AtVeryVeryEnd' on input line 241.
  ) 
 Here is how much of TeX's memory you used:
- 6010 strings out of 493312
- 87976 string characters out of 3138902
- 188082 words of memory out of 3000000
- 9484 multiletter control sequences out of 15000+200000
- 7115 words of font info for 26 fonts, out of 3000000 for 9000
+ 5975 strings out of 493312
+ 86978 string characters out of 3138902
+ 188793 words of memory out of 3000000
+ 9461 multiletter control sequences out of 15000+200000
+ 6763 words of font info for 25 fonts, out of 3000000 for 9000
  1141 hyphenation exceptions out of 8191
- 33i,11n,45p,207b,328s stack positions out of 5000i,500n,10000p,200000b,50000s
+ 30i,11n,45p,207b,322s stack positions out of 5000i,500n,10000p,200000b,50000s
 <D:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx10.pfb><D:/Pr
 ogram Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx12.pfb><D:/Program Fi
 les/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmbx9.pfb><D:/Program Files/MiKTe
 X 2.9/fonts/type1/public/amsfonts/cm/cmbxti10.pfb><D:/Program Files/MiKTeX 2.9/
-fonts/type1/public/amsfonts/cm/cmcsc10.pfb><D:/Program Files/MiKTeX 2.9/fonts/t
-ype1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/publ
-ic/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfont
-s/cm/cmsl9.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtc
-sc10.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfonts/cm/cmtt10.pfb
->
-Output written on report.pdf (4 pages, 994660 bytes).
+fonts/type1/public/amsfonts/cm/cmr10.pfb><D:/Program Files/MiKTeX 2.9/fonts/typ
+e1/public/amsfonts/cm/cmr9.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/public/
+amsfonts/cm/cmtcsc10.pfb><D:/Program Files/MiKTeX 2.9/fonts/type1/public/amsfon
+ts/cm/cmtt10.pfb>
+Output written on report.pdf (3 pages, 130002 bytes).
 PDF statistics:
- 128 PDF objects out of 1000 (max. 8388607)
- 25 named destinations out of 1000 (max. 500000)
- 16 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 85 PDF objects out of 1000 (max. 8388607)
+ 18 named destinations out of 1000 (max. 500000)
+ 1 words of extra memory for PDF output out of 10000 (max. 10000000)
 

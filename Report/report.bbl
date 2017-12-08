@@ -1,36 +1,30 @@
-\begin{thebibliography}{5}
+\begin{thebibliography}{4}
 \providecommand{\natexlab}[1]{#1}
 \providecommand{\url}[1]{\texttt{#1}}
 \expandafter\ifx\csname urlstyle\endcsname\relax
   \providecommand{\doi}[1]{doi: #1}\else
   \providecommand{\doi}{doi: \begingroup \urlstyle{rm}\Url}\fi
 
-\bibitem[Conaway(2017{\natexlab{a}})]{kaggle}
-Nolan Conaway.
-\newblock 18,393 pitchfork reviews, 2017{\natexlab{a}}.
-\newblock URL \url{https://www.kaggle.com/nolanbconaway/pitchfork-data}.
-
-\bibitem[Conaway(2017{\natexlab{b}})]{kaggleFirst}
-Nolan Conaway.
-\newblock Is the first album the best?, 2017{\natexlab{b}}.
+\bibitem[Burgoine(2017)]{kaggleUser}
+Paul Burgoine.
+\newblock Pitchforks favourite genre by year, 2017.
 \newblock URL
-  \url{https://www.kaggle.com/nolanbconaway/is-the-first-album-the-best}.
+  \url{https://www.kaggle.com/burgoine/pitchforks-favourite-genre-by-year}.
+
+\bibitem[Conaway(2017)]{kaggle}
+Nolan Conaway.
+\newblock 18,393 pitchfork reviews, 2017.
+\newblock URL \url{https://www.kaggle.com/nolanbconaway/pitchfork-data}.
 
 \bibitem[Crauwels(2016)]{musicmap}
 Kwinten Crauwels.
 \newblock musicmap, 2016.
 \newblock URL \url{https://musicmap.info/}.
 
-\bibitem[Matthias~Mauch and Leroi(2015{\natexlab{a}})]{Billboard100}
+\bibitem[Matthias~Mauch and Leroi(2015)]{Billboard100}
 Mark~Levy Matthias~Mauch, Robert M.~MacCallum and Armand~M. Leroi.
 \newblock The evolution of popular music: Usa 1960–2010.
-\newblock 2015{\natexlab{a}}.
+\newblock 2015.
 \newblock URL \url{http://pubmedcentralcanada.ca/pmcc/articles/PMC4453253/}.
-
-\bibitem[Matthias~Mauch and Leroi(2015{\natexlab{b}})]{BillboardFigure}
-Mark~Levy Matthias~Mauch, Robert M.~MacCallum and Armand~M. Leroi.
-\newblock Figure 3., 2015{\natexlab{b}}.
-\newblock URL
-  \url{http://pubmedcentralcanada.ca/pmcc/articles/PMC4453253/figure/RSOS150081F3/}.
 
 \end{thebibliography}

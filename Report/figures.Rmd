@@ -1,0 +1,25 @@
+---
+output: 
+  pdf_document:
+    number_sections: false
+    keep_tex: true
+    fig_caption: true
+---
+##Figures
+
+![Frequency table of genre reviews per year \label{fig1}](report_files/figure-latex/frequency_table.pdf)
+
+\newpage
+![Proportional table of genre reviews per year \label{fig2}](report_files/figure-latex/proportional_table.pdf)
+
+\newpage
+![Boxplots of score by year \label{fig3}](report_files/figure-latex/score_year.pdf)
+
+\newpage
+![Boxplots of score by genre \label{fig4}](report_files/figure-latex/score_genre.pdf)
+
+\newpage
+![Regression of mean scores of each year with LOESS smoothing \label{fig5}](report_files/figure-latex/regression_genre.pdf)
+
+\newpage
+![Scatterplot matrix of features \label{fig6}](report_files/figure-latex/scatterplot_matrix.pdf)
